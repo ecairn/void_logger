@@ -30,7 +30,7 @@ class TestVoidLogger < Minitest::Test
     assert_equal LOGGER, b.logger
 
     b.remove_logger
-    b.reset_fallback
+    b.reset_fallback_logger
     assert b.logger.is_a?(VoidLogger)
 
     b.logger = LOGGER

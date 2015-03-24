@@ -4,7 +4,7 @@ class VoidLogger < ::Logger
   VERSION = "0.1"
 
   def initialize(logdev=nil)
-    super(logdev) unless logdev.nil?
+    super(logdev)
   end
 
   def add(severity, message = nil, progname = nil, &block)
@@ -14,15 +14,15 @@ class VoidLogger < ::Logger
   module LoggerMixin
 
     attr_writer :logger
-    attr_reader :fallback
+    attr_reader :fallback_logger
 
     def logger
-      @fallback ||= (super rescue nil) || VoidLogger.new
-      @logger || @fallback
+      @fallback_logger ||= (super rescue nil) || VoidLogger.new
+      @logger || @fallback_logger
     end
 
-    def reset_fallback
-      @fallback = nil
+    def reset_fallback_logger
+      @fallback_logger = nil
     end
   end
 end

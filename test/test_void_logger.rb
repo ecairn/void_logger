@@ -21,39 +21,44 @@ class TestVoidLogger < Minitest::Test
     assert !string.include?("Should not be logged")
   end
 
-  def test_fallback
-    # ancestors: [TestFallbackClass1, TestFallbackModule1, VoidLogger::Fallback, Object, Minitest::Expectations, Kernel, BasicObject]
-    t = TestFallbackClass1.new
+  def test_logger_mixin
+    b = B.new
 
-    assert t.logger.is_a?(VoidLogger)
+    assert b.logger.is_a?(VoidLogger)
 
-    # ancestors: [TestFallbackClass2, TestFallbackModule2, TestFallbackModule1, VoidLogger::Fallback, TestFallbackLogger, Object, Minitest::Expectations, Kernel, BasicObject]
-    t = TestFallbackClass2.new
+    b = B.new(true)
+    assert_equal LOGGER, b.logger
 
-    assert_equal LOGGER, t.logger
+    b.remove_logger
+    b.reset_fallback
+    assert b.logger.is_a?(VoidLogger)
+
+    b.logger = LOGGER
+    assert_equal LOGGER, b.logger
+
+    b.logger = nil
+    assert b.logger.is_a?(VoidLogger)
   end
 end
 
-module TestFallbackModule1
-  include VoidLogger::Fallback
-end
+class A
+  def initialize(log=false)
+    if log
+      self.class.send(:define_method, :logger) do
+        LOGGER
+      end
+    end
+  end
 
-class TestFallbackClass1
-  include TestFallbackModule1
-end
-
-module TestFallbackLogger
-  def logger
-    LOGGER
+  def remove_logger
+    self.class.send(:remove_method, :logger)
   end
 end
 
-module TestFallbackModule2
-  include TestFallbackLogger
-  include VoidLogger::Fallback
-  include TestFallbackModule1
-end
+class B < A
+  include VoidLogger::LoggerMixin
 
-class TestFallbackClass2
-  include TestFallbackModule2
+  def initialize(log=false)
+    super(log)
+  end
 end

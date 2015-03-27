@@ -9,9 +9,13 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Denis Jean", "Laurent Farcy"]
   spec.email         = ["denis.jean@ecairn.com", "laurent.farcy@ecairn.com"]
   spec.summary       = %q{VoidLogger is a Ruby logger that logs to the void.}
-  spec.description   = "A VoidLogger instance is useful when you want to log things in
-                        your class or module but do not necessarily want those traces to go somewhere.
-                        Replace the current logger with a VoidLogger instance and nobody will hear your code scream."
+  
+  spec.description   = <<-EOF
+    A VoidLogger instance is useful when you want to log things in
+    your class or module but do not necessarily want those traces to go somewhere.
+    Replace the current logger with a VoidLogger instance and nobody will hear your code scream.
+  EOF
+  
   spec.homepage      = "https://github.com/ecairn/void_logger"
   spec.license       = "MIT"
 

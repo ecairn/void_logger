@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = VoidLogger::VERSION
   spec.authors       = ["Denis Jean", "Laurent Farcy"]
   spec.email         = ["denis.jean@ecairn.com", "laurent.farcy@ecairn.com"]
-  spec.summary       = %q{VoidLogger is a Ruby logger that logs to the void.}
+  spec.summary       = %q{VoidLogger is a Ruby logger that logs into the void.}
   
   spec.description   = <<-EOF
     A VoidLogger instance is useful when you want to log things in

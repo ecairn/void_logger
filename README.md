@@ -1,6 +1,12 @@
 # VoidLogger
 
-VoidLogger is a logger that logs to nothing.
+VoidLogger is a Ruby logger that logs to nothing, void or still nowhere.
+
+## Purpose
+
+A VoidLogger instance is useful when you want to log things in your class or module but do not necessarily want those traces to go somewhere. Replace the current logger with a VoidLogger instance and nobody will hear your code scream.
+
+The VoidLogger::LoggerMixin module comes in support of this approach. Once included in a module or class, it defines a logger attribute initialized to a VoidLogger instance. Later on, you can use a different logger simply by assigning this logger attribute with your own ::Logger variant.
 
 ## Installation
 
@@ -40,12 +46,16 @@ require 'void_logger'
 
 class Test
   include VoidLogger::LoggerMixin
+  
+  def initialize(logger=nil)
+    self.logger = logger
+  end
 end
 ```
 
 This mixin brings two members to your module/class:
-- fallback_logger: It will look up all the ancestors to find a logger method and use it if it finds one or return a VoidLogger.new
-- logger: The logger you can use in the class you mix VoidLogger::LoggerMixin into. Return the fallback logger (as defined above) unless you explicitly set a logger with the logger= method.
+- logger: It will look up all the ancestors to find a logger method and use it if it finds one or return a VoidLogger.new
+- fallback_logger: The logger you can use in the class you mix VoidLogger::LoggerMixin into. Return the fallback logger (as defined above) unless you explicitly set a logger with the logger= method.
 
 You can reset the fallback logger by calling:
 

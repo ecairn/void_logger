@@ -1,6 +1,6 @@
 # VoidLogger
 
-VoidLogger is a Ruby logger that logs to nothing, void or still nowhere.
+VoidLogger is a Ruby logger that logs into nothing, void or still nowhere.
 
 ## Purpose
 
